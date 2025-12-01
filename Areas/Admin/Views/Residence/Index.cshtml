@@ -1,0 +1,44 @@
+@model IEnumerable<Residence>
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Manage Residences";
+}
+
+<h2>Manage Residences</h2>
+
+<a asp-action="Add" class="btn btn-primary mb-3">Add New Residence</a>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Owner</th> <th>Guests</th>
+            <th>Price/Night</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.Name</td>
+                <td>@r.Location.Name</td>
+                <td>@r.Owner.Name</td> <td>@r.GuestNumber</td>
+                <td>@r.PricePerNight.ToString("c")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@r.ResidenceId" class="btn btn-sm btn-primary">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@r.ResidenceId" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

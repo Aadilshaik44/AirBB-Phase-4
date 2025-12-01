@@ -1,0 +1,42 @@
+@model Location
+@{
+    ViewData["Title"] = "Add Location";
+    Layout = "_AdminLayout";
+}
+
+<h2>Add Location</h2>
+
+<form asp-action="Add" method="post">
+    <div asp-validation-summary="None" class="text-danger"></div>
+    
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Add</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+            // Select the form on the page
+            var $form = $("form");
+
+            // Ensure the validator is attached
+            if ($form.length && $form.data("validator")) {
+                var validator = $form.data("validator");
+
+                // Override the default onfocusout behavior
+                validator.settings.onfocusout = function(element) {
+                    // This forces validation on the element when you tab out
+                    $(element).valid();
+                };
+            }
+        });
+    </script>
+}
